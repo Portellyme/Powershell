@@ -1,4 +1,6 @@
 # RegExHelper
+Owner : https://github.com/proxb
+
 A UI to help with writing Regular Expressions.
 
 This is a UI built using PowerShell and WPF that allows for simple Regular Expression checking by displaying the results in real time.
@@ -15,5 +17,3 @@ You need to dot source the script to load the Invoke-RegExHelper function.
 ```PowerShell
 Invoke-RegExHelper
 ```
-
-![alt tag](https://github.com/proxb)
