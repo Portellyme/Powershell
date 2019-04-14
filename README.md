@@ -1,2 +1,5 @@
 # Powershell
-This repository is used for my scripts and modules
+Repository used for my scripts and modules
+
+## Sources 
+Regex Helpers : https://github.com/proxb
