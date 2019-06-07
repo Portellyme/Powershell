@@ -3,6 +3,7 @@
 	[OutputType([string])]
 	Param
 	(
+		
 		[Parameter(Mandatory = $true)]
 		[string]
 		$ExceptionString,
