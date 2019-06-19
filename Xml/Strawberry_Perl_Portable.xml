@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Runtimes>
+	<Runtime>
+		<RuntimeName>Strawberry Perl Portable</RuntimeName>
+		<BaseDirectory>strawberry-perl-5.24.3.0-64bit-portable</BaseDirectory>
+		<RuntimeDirectory>Perl</RuntimeDirectory>
+		<DestinationDirectory>Tools\Runtime</DestinationDirectory>
+		<InUse>Yes</InUse>
+		<AdditionalFiles>
+			<AdditionalFilesDirectory>AdditionalFiles</AdditionalFilesDirectory>
+			<File>
+				<FileName>PortableShell.bat</FileName>
+				<FileDirectory />
+				<!-- Destination based on root repository  Tools is actually Branchrootpath\Tools\-->
+				<DestinationDirectory>Tools</DestinationDirectory>
+			</File>
+		</AdditionalFiles>
+	</Runtime>
+	<Runtime>
+		<RuntimeName>Strawberry Perl Portable</RuntimeName>
+		<BaseDirectory>strawberry-perl-5.30.0.1-64bit-portable</BaseDirectory>
+		<RuntimeDirectory>Perl</RuntimeDirectory>
+		<DestinationDirectory>Tools\Runtime</DestinationDirectory>
+		<InUse>No</InUse>
+		<AdditionalFiles>
+			<AdditionalFilesDirectory>AdditionalFiles</AdditionalFilesDirectory>
+			<File>
+				<FileName>PortableShell.bat</FileName>
+				<FileDirectory />
+				<!-- Destination based on root repository  Tools is actually Branchrootpath\Tools\-->
+				<DestinationDirectory>Tools</DestinationDirectory>
+			</File>
+		</AdditionalFiles>
+	</Runtime>
+</Runtimes>

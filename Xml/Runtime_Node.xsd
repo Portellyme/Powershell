@@ -1,0 +1,39 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"> 
+ <xs:element name="Runtimes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Runtime" maxOccurs="unbounded" minOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="RuntimeName"/>
+              <xs:element type="xs:string" name="BaseDirectory"/>
+              <xs:element type="xs:string" name="RuntimeDirectory"/>
+              <xs:element type="xs:string" name="DestinationDirectory"/>
+              <xs:element type="xs:string" name="InUse"/>
+              <xs:element name="AdditionalFiles" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="AdditionalFilesDirectory"/>
+                    <xs:element name="File" maxOccurs="unbounded" minOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="FileName"/>
+                          <xs:element type="xs:string" name="FileDirectory"/>
+                          <xs:element type="xs:string" name="DestinationDirectory">
+                            <xs:annotation>
+                              <xs:documentation>Destination based on root repository  Tools is actually Branchrootpath\Tools\ Destination based on root repository  Tools is actually Branchrootpath\Tools\</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
