@@ -22,7 +22,7 @@ End Data
 
 
 
-### PipelineTo-Loop
+### PipelineTo-LoopArray
 **Call :**  
 $Array = 1..10  
 PipelineTo-LoopArray -Source $Array  
@@ -37,7 +37,7 @@ Processing source N°: 5
 End Data  
 
 
-
+### PipelineTo-Loop  
 **Call :**  
  1..10 | ForEach-Object { PipelineTo-Loop -Source $_ }  
 
