@@ -1,4 +1,4 @@
-﻿Function PipelineTo-Loop
+﻿Function PipelineTo-LoopArray
 {
 	[CmdletBinding()]
 	Param
@@ -6,7 +6,7 @@
 		[Parameter(Mandatory = $true,
 				   ValueFromPipeline = $true)]
 		[ValidateNotNullOrEmpty()]
-		[String]
+		[String[]]
 		$Source
 	)
 	
@@ -16,30 +16,33 @@
 	}
 	Process
 	{
-		Try
-		{
-			If ($Source -eq "5")
-			{
-				Throw [system.exception]::new(("Non pas la source N°: $($Source)"))
-			}
-			Write-Host "Processing source N°: $($Source)"
+        foreach ($Item in $Source)
+        {
+		    Try
+		    {
+			    If ($Item -eq "5")
+			    {
+				    Throw [system.exception]::new(("Non pas la source N°: $($Item)"))
+			    }
+			    Write-Host "Processing source N°: $($Item)"
 			
-		}
-		Catch
-		{
-			$_.Exception.Message
-		}
-	}
+		    }
+		    Catch
+		    {
+			    $_.Exception.Message
+		    }
+	    }
+    }
 	End
 	{
 		write-host "End Data"
 	}
 }
 
+$Array = 1..10
+PipelineTo-LoopArray -Source $Array
 
-#PipelineTo-Loop -Source 1..10
 
- 1..10 | ForEach-Object { PipelineTo-Loop -Source $_}
 #Results 
 <#
 Begin Data
