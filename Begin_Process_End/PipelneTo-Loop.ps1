@@ -37,9 +37,9 @@
 }
 
 
-#PipelineTo-Loop -Source 1..10
+1..10 | PipelineTo-Loop 
 
- 1..10 | ForEach-Object { PipelineTo-Loop -Source $_}
+# 1..10 | ForEach-Object { PipelineTo-Loop -Source $_}
 #Results 
 <#
 Begin Data
