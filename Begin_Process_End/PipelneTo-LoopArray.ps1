@@ -1,4 +1,4 @@
-﻿Function PipelineTo-LoopArray
+﻿Function Get-PipelineToLoopArray
 {
 	[CmdletBinding()]
 	Param
@@ -9,7 +9,7 @@
 		[String[]]
 		$Source
 	)
-	
+
 	Begin
 	{
 		write-host "Begin Data"
@@ -25,7 +25,7 @@
 				    Throw [system.exception]::new(("Non pas la source N°: $($Item)"))
 			    }
 			    Write-Host "Processing source N°: $($Item)"
-			
+
 		    }
 		    Catch
 		    {
@@ -40,10 +40,10 @@
 }
 
 $Array = 1..10
-PipelineTo-LoopArray -Source $Array
+Get-PipelineToLoopArray -Source $Array
 
 
-#Results 
+#Results
 <#
 Begin Data
 Processing source N°: 1
