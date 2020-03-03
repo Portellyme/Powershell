@@ -4,7 +4,7 @@
 	 Created with: 	SAPIEN Technologies, Inc., PowerShell Studio 2019 v5.6.170
 	 Created on:   	18/12/2019 14:07
 	 Created by:   	Gabriel Gaulet
-	 Organization: 	LVM
+	 Organization: 	
 	 Filename:     	Clear-Folder
 	===========================================================================
 	.DESCRIPTION
