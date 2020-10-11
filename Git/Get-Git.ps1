@@ -8,7 +8,7 @@
 	 Filename:     	Get-Git.ps1
 	===========================================================================
 	.DESCRIPTION
-		Download and Install lastrest version of Git
+		Download and Install latest version of Git
 #>
 
 
