@@ -41,8 +41,10 @@
 
 $Array = 1..10
 Get-PipelineToLoopArray -Source $Array
+#Get-PipelineToLoopArray -Source 55,66,77,88,89,90
 
-
+1 .. 10 | Get-PipelineToLoopArray
+5 | Get-PipelineToLoopArray
 #Results
 <#
 Begin Data
