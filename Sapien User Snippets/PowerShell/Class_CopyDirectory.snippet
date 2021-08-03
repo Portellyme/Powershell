@@ -1,0 +1,95 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Class_CopyDirectory</Title>
+			<Shortcut>Class_CopyDirectory</Shortcut>
+			<Description>Class for Directory Copy</Description>
+			<Author>Portelly</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="PowerShell">
+				<![CDATA[
+class DirectoryCopy  {
+	
+	# Properties
+	[string]$source
+	[string]$destination
+	[bool]$subDirectories
+	
+	# Constructors
+	DirectoryCopy ([string]$sourceFolder, [string]$destinationFolder)
+	{
+		#Move to next constructor 
+		$this.DirectoryCopy($sourceFolder, $destinationFolder, $true)
+	}
+	
+	DirectoryCopy ([string]$sourceFolder, [string]$destinationFolder, [bool]$subDirectories)
+	{
+		$this.source = $sourceFolder
+		$this.destination = $destinationFolder
+		$this.subDirectories = $subDirectories
+	}
+	
+	
+	#Methods
+	static CopyDir([string]$sourceDirName, [string]$destDirName, [bool]$copySubDirs)
+	{
+		
+		$directory = [System.IO.DirectoryInfo]::new($sourceDirName)
+		if (!$directory.Exists)
+		{
+			throw [system.IO.DirectoryNotFoundException]::new("Source directory $sourceDirName does not exist or could not be found.")
+		}
+		
+		#Get the subdirectories for the specified directory.
+		$directoriesCollection = $directory.GetDirectories()
+		
+		# If the destination directory doesn't exist, create it.    
+		if (![System.io.Directory]::Exists($destDirName))
+		{
+			try
+			{
+				[System.io.Directory]::CreateDirectory($destDirName)
+			}
+			catch
+			{
+				Write-Host $_.Exception.Message
+			}
+			
+		}
+		
+		#Get the files in the directory and copy them to the new location.
+		$filesToCopy = $directory.GetFiles()
+		foreach ($localFile in $filesToCopy)
+		{
+			$tempPath = [System.IO.Path]::Combine($destDirName, $localFile.Name)
+			try
+			{
+				$localFile.CopyTo($tempPath, $false)
+				Write-Host ("{0} has been copied to {1}" -f $localFile.Name, $tempPath)
+			}
+			catch [System.io.IOException]
+			{
+				Write-Host $_.Exception.Message
+			}
+		}
+		
+		#If copying subdirectories, copy them and their contents to new location.
+		if ($copySubDirs)
+		{
+			foreach ($subdir in $directoriesCollection)
+			{
+				$tempPath = [System.IO.Path]::Combine($destDirName, $subdir.Name);
+				[DirectoryCopy]::CopyDir($subdir.FullName(), $tempPath, $copySubDirs);
+			}
+		}
+	}
+	
+}]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

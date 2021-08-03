@@ -3,7 +3,7 @@
 		<Header>
 			<Title>StartScript-Helper</Title>
 			<Shortcut>startscript</Shortcut>
-			<Description>Insert the default header i use </Description>
+			<Description>Insert the default header</Description>
 			<Author>Gabriel Gaulet</Author>
 			<SnippetTypes>
 				<SnippetType>Expansion</SnippetType>
@@ -55,8 +55,8 @@ function Get-ScriptDirectory
 ######################
 #region Global Declaration 
 ######################
-$ScriptDirectory = Get-ScriptDirectory
-$ScriptName = ($MyInvocation.MyCommand.Name.Split("."))[0]
+[system.string] $ScriptDirectory = Get-ScriptDirectory
+[system.string] $ScriptName = ($MyInvocation.MyCommand.Name.Split("."))[0]
 
 
 #endregion 

@@ -1,0 +1,106 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Test-ADOrganizationalUnit</Title>
+			<Shortcut>Test-ADOrganizationalUnit</Shortcut>
+			<Author>Portelly</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="PowerShell">
+				<![CDATA[
+function Test-ADOrganizationalUnit
+{
+<#
+	.SYNOPSIS
+		Check if an Orgaizational Unit Exist.
+	
+	.DESCRIPTION
+		Check if an Orgaizational Unit Exist.
+		With Base DN + Ou Name or Full DN Name
+	
+	.PARAMETER CommonName
+		Common Name
+		This refers to the individual object (person's name; meeting room; recipe name; job title; etc.) for whom/which you are querying.
+	
+	.PARAMETER BaseDN
+		Search base DN & Domain components
+		This refers to the name that uniquely identifies an entry in the directory.
+		Must contaon the Domain component part
+		This refers to each component of the domain.
+		For example www.mydomain.com would be written as DC=www,DC=mydomain,DC=com
+	
+	.PARAMETER FullDN
+		A description of the FullDN parameter.
+	
+	.EXAMPLE
+		PS C:\> Test-ADOrganizationalUnit -CommonName 'Value1' -BaseDN 'Value2'
+		PS C:\> Test-ADOrganizationalUnit -FullDn 'Value1'
+	
+	.OUTPUTS
+		bool
+	
+	.NOTES
+		Additional information about the function.
+#>
+	
+	[OutputType([boolean], ParameterSetName = 'FullDn')]
+	[OutputType([boolean], ParameterSetName = 'BaseDN')]
+	param
+	(
+		[Parameter(ParameterSetName = 'BaseDN',
+				   Mandatory = $true,
+				   Position = 1)]
+		[ValidateNotNullOrEmpty()]
+		[string]
+		$CommonName,
+		[Parameter(ParameterSetName = 'BaseDN',
+				   Mandatory = $true,
+				   Position = 2)]
+		[ValidateNotNullOrEmpty()]
+		[string]
+		$BaseDN,
+		[Parameter(ParameterSetName = 'FullDn',
+				   Mandatory = $true,
+				   Position = 3)]
+		[ValidateNotNullOrEmpty()]
+		[string]
+		$FullDN
+	)
+	
+	
+	Write-Verbose "ParameterSetName : $($PSCmdlet.ParameterSetName)."
+	if (($PSCmdlet.ParameterSetName) -eq 'FullDn')
+	{
+		$ouDN = $FullDN
+	}
+	else
+	{
+		$ouDN = "OU=$CommonName,$BaseDN"
+	}
+	
+	#Preset Output
+	$OutPutData = $false
+	
+	# Check if the OU exists
+	try
+	{
+		Get-ADOrganizationalUnit -Identity $ouDN | Out-Null
+		Write-Verbose "OU '$ouDN' exists."
+		$OutPutData = $true
+	}
+	catch [Microsoft.ActiveDirectory.Management.ADIdentityNotFoundException] {
+		Write-Verbose "OU '$ouDN' doesn't exists."
+		
+	}
+	
+	Return $OutPutData
+}
+
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
