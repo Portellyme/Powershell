@@ -10,8 +10,8 @@ Visual Studio Code Look Like PS ISE [TechSnips](http://www.techsnips.io)
 
 
 [Adam, the Automator](http://www.adamtheautomator.com)
-/FileSystem/Compare-Folder
-
+- /FileSystem/Compare-Folder
+- /FileSystem/Copy-FileWithHashCheck.ps1
 
 
 
