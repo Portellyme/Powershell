@@ -5,7 +5,7 @@
 	 Created on:   	21/12/2020 14:19
 	 Created by:   	Portelly
 	 Organization: 	Portelly
-	 Filename:     	
+	 Filename:     	Get-ADUser-FromUPN.ps1
 	===========================================================================
 	.DESCRIPTION
 		Get AD user from UPN with validation of UPN format using the Confirm-MailAddress function
