@@ -20,7 +20,7 @@ Class Email{
 	{
 		If ([string]::IsNullOrWhiteSpace($emailAddress))
 		{
-			Throw [System.Exception]::new("Email address is empty", [System.ArgumentException])
+			#Throw [System.Exception]::new("Email address is empty", [System.ArgumentException])
 		}
 		
 		if ($this.TestEmail($emailAddress))
@@ -29,7 +29,7 @@ Class Email{
 		}
 		else
 		{
-			Throw [System.Exception]::new("Email {$($emailAddress)} format is invalid")
+			#Throw [System.Exception]::new("Email {$($emailAddress)} format is invalid")
 		}
 		
 	}

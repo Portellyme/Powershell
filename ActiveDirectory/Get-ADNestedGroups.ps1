@@ -122,3 +122,106 @@ function Get-ADNestedGroup
 	}
 }
 
+
+
+function Get-ADNestedUsers
+{
+	   <#
+    .SYNOPSIS
+        Gets a list of users inside an Active Directory group to work with the Previous function
+    .DESCRIPTION
+        Gets a list of user inside an Active Directory group using LDAPFilter. 
+		User can be in multiple as the criteria is to use a List based on User.GUID & GroupName
+    .PARAMETER Group
+        The name of an Active Directory group
+    .PARAMETER Server
+        The name of Domain controller to use for query. 
+		Valid entries are a server name or servername:3268 for a Global Catalog query.
+    .NOTES
+	Object Class to Use with the Function 
+	Class AdNestedusers{
+	
+	# Properties
+	[string]$Name #Name
+	[string]$NestedGroupMember
+	[string]$Enabled
+	[string]$ObjectClass
+	[string]$CanonicalName
+	[string]$DistinguishedName
+	[string]$SamAccountName
+	[string]$UserPrincipalName
+	[GUID]$GUID #ObjectGUID 
+	
+	# Constructors
+	AdNestedusers () { }
+	
+	AdNestedusers ([string]$ParentGroup, [object]$GetADUserObj)
+	{
+		$this.NestedGroupMember = $ParentGroup
+		$this.Enabled = $GetADUserObj.Enabled
+		$this.ObjectClass = $GetADUserObj.ObjectClass
+		$this.CanonicalName = $GetADUserObj.CanonicalName
+		$this.DistinguishedName = $GetADUserObj.DistinguishedName
+		$this.SamAccountName = $GetADUserObj.SamAccountName
+		$this.Name = $GetADUserObj.Name
+		$this.UserPrincipalName = $GetADUserObj.UserPrincipalName
+		$this.GUID = $GetADUserObj.ObjectGUID
+	}
+}
+	
+	#>
+	
+	
+	
+	
+	
+	
+	[CmdletBinding()]
+	[OutputType([System.Collections.Generic.List`1])]
+	param
+	(
+		[Parameter(Mandatory = $true,
+				   ValueFromPipelineByPropertyName = $true)]
+		[String[]]
+		$Group,
+		[String]
+		$ADServerName = (Get-ADReplicationsite | Get-ADDomainController -SiteName $_.name -Discover -ErrorAction SilentlyContinue).name
+	)
+	
+	BEGIN
+	{
+		$UserList = [System.Collections.Generic.List`1[AdNestedusers]]::new()
+	}
+	PROCESS
+	{
+		foreach ($ParentGrp in $Group)
+		{
+			#Get users information and put it in Object 
+			$ADGrpParent = Get-ADGroup -Identity $ParentGrp -Properties Members, CanonicalName, ObjectGUID -Server $ADServerName
+			#Query AD to find Member of the group that are type 'users'
+			$QueryResult = Get-ADUser -LDAPFilter "(&(objectCategory=person)(memberof=$($ADGrpParent.DistinguishedName)))" -Properties canonicalname -Server $ADServerName
+			# If users are present 
+			if ($null -ne $QueryResult)
+			{
+				#For each user if it not exist in the list (GUID Base search) will add it
+				foreach ($usr in $QueryResult)
+				{
+					#User can be in multiple groups
+					#Criteria : Must not Present by GUID and By Group Name
+					if ($null -eq ($UserList.where({ ($_.GUID -eq $usr.ObjectGUID) -and ($_.NestedGroupMember -eq $ParentGrp) })).GUID)
+					{
+						$UserList.Add([AdNestedusers]::new($ParentGrp, $usr))
+					}
+					
+					
+				}
+			}
+		}
+	}
+	END
+	{
+		return $UserList
+	}
+	
+}
+
