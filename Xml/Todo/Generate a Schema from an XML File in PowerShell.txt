@@ -1,0 +1,77 @@
+Generate a Schema from an XML File in PowerShell
+
+
+
+<pre>
+cls
+#
+# from: http://mylifeismymessage.net/generate-a-schema-from-an-xml-file-in-powershell/
+#
+$xmlFilename = "c:\XMLClass\IntroSamples\Flight03.xml"
+$xsdSchemaFilename = $xmlFilename.Replace(".xml","_dotNet_generated.xsd")
+
+# Remove existing XSD - remove this if you don't want overlay existing file
+# or maybe enhance to prompt the user if he wants to overwrite the file. 
+if(Test-Path $xsdSchemaFilename)
+{
+      Remove-Item -Path $xsdSchemaFilename
+}
+
+#code converted from C# to PowerShell from here: 
+#https://stackoverflow.com/questions/22835730/create-xsd-from-xml-in-code/22836075
+#with enhancements and ideas from here: 
+#https://learningpcs.blogspot.com/2012/08/powershell-v3-inferring-schema-xsd-from.html
+
+# I left in the C# code so you can see how it gets converted to PowerShell.</pre>
+<pre>#XmlReader reader = XmlReader.Create("contosoBooks.xml");
+$reader = [System.Xml.XmlReader]::create($xmlFilename)
+#XmlSchemaSet schemaSet = new XmlSchemaSet()
+#XmlSchemaInference schema = new XmlSchemaInference()
+#https://docs.microsoft.com/en-us/dotnet/api/system.xml.schema.xmlschemaset?view=netcore-3.1
+$schemaSet = New-Object System.Xml.Schema.XmlSchemaSet
+#https://docs.microsoft.com/en-us/dotnet/api/system.xml.schema.xmlschemainference?view=netcore-3.1
+$schema = New-Object System.Xml.Schema.XmlSchemaInference 
+
+#schemaSet = schema.InferSchema(reader);
+$schemaSet = $schema.InferSchema($reader)
+
+# Create new output file
+$file = New-Object System.IO.FileStream($xsdSchemaFilename, [System.IO.FileMode]::CreateNew)
+$file.Close() 
+
+$xmlWriter = New-Object System.Xml.XmlTextWriter ($xsdSchemaFilename, [System.Text.Encoding]::UTF8)
+$xmlWriter.Formatting = [System.Xml.Formatting]::Indented
+
+$loopCounter = 0 
+foreach ($s in $schemaSet.Schemas())
+{
+   $loopCounter++
+   Write-Host "LoopCounter: $loopCounter"
+   $s.Write($xmlWriter) 
+   
+}
+
+$xmlWriter.Close()
+Write-Host "See file: $xsdSchemaFilename"
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

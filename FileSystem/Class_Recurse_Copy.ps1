@@ -118,7 +118,7 @@ class DirectoryCopy  {
 			foreach ($subdir in $directoriesCollection)
 			{
 				$tempPath = [System.IO.Path]::Combine($destDirName, $subdir.Name);
-				[DirectoryCopy]::CopyDir($subdir.FullName(), $tempPath, $copySubDirs);
+				[DirectoryCopy]::CopyDir($subdir.FullName, $tempPath, $copySubDirs);
 			}
 		}
 	}

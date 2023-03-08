@@ -142,11 +142,11 @@ Function Get-XMLSchema
 
 
 
-$XMLSchemaPath = "C:\Work\Cmdb_Repos\Initialize\Tools\Runtimes\Runtime_Node.xsd"
+#$XMLSchemaPath = "C:\Work\Cmdb_Repos\Initialize\Tools\Runtimes\Runtime_Node.xsd"
+$XMLSchemaPath =  "http://standards.iso.org/iso/19770/-2/2015/schema.xsd"
 
-
-$XmlFile = "C:\Work\Cmdb_Repos\Initialize\Tools\Runtimes\Strawberry_Perl_Portable.xml"
-
+#$XmlFile = "C:\Work\Cmdb_Repos\Initialize\Tools\Runtimes\Strawberry_Perl_Portable.xml"
+$XmlFile = "C:\Work\Nist\scapval-1.3.6-rc3\SWIDTAG\swid-tag.xml"
 Test-ValidateXmlFile -SchemaFIle $XMLSchemaPath -XmlFile $XmlFile
 
 
